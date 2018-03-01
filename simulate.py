@@ -8,6 +8,9 @@ def score_vehicle(city, vehicle):
     vehicle.current_position = (0, 0)
 
     for ride in vehicle.ride_queue:
+        if t < ride.earliest_start:
+            t = ride.earliest_start
+
         # durations
         vehicle_to_start = distance(vehicle.current_position, ride.start_from)
         ride_duration = distance(ride.start_from, ride.end_at)

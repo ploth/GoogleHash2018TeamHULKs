@@ -18,8 +18,8 @@ def naive_check_strategy(city):
         ride_duration = distance(ride.start_from, ride.end_at)
         total_duration = vehicle_to_start + ride_duration
 
-
-        time_finish = vehicle.current_time + total_duration
+        start_time = vehicle.current_time if vehicle.current_time > ride.earliest_start else ride.earliest_start
+        time_finish = start_time + total_duration
 
         can_finish_before_world_ends = time_finish <= city.steps
         can_finish_before_tour_is_old = time_finish <= ride.latest_finish
