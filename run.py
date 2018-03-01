@@ -3,22 +3,26 @@
 
 import argparse
 
-from parser import load_problem
+import os
 
+from parser import load_problem, save_solution
+from simulate import score_solution
+import strategies
 def main():
     # read command line arguments
     arg_parser = argparse.ArgumentParser(description="Runs the hashcode solution",
                                          formatter_class=argparse.RawTextHelpFormatter)
-    arg_parser.add_argument("input_path", help="help_text")
-    args = arg_parser.parse_args()
-    input_path = args.input_path
 
-    city = load_problem(input_path)
-    print(city)
+    arg_parser.add_argument("strategy_name", help="Strategy name")
+    for filename in os.listdir("./problems"):
+        args = arg_parser.parse_args()
+        strategy_name = args.strategy_name
 
-    #  pizza.slices = [(0, 0, 2, 1), (0, 2, 3, 3), (3, 0, 4, 2)]
+        city = load_problem("./problems/%s" % filename)
+        solution = strategies.__dict__[strategy_name](city)
 
-    #  write_solution_file(pizza)
+        print("Score: %s" % score_solution(solution))
+        save_solution("./solutions/%s_%s.out" % (filename, strategy_name), solution)
 
 if __name__ == '__main__':
     main()

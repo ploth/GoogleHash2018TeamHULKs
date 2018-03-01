@@ -50,7 +50,7 @@ def load_solution(solution_path, city):
     tours = [[city.rides[int(tour_id)] for tour_id in line.split()[1:]] for line in lines]
 
     if len(tours) != len(city.vehicles):
-        raise "Length of tours %s does not match number of vehicles %s." % (len(tours), len(city.vehicles))
+        raise Exception("Length of tours %s does not match number of vehicles %s." % (len(tours), len(city.vehicles)))
 
     for i, vehicle in enumerate(city.vehicles):
         vehicle.ride_queue = deque(tours[i])
