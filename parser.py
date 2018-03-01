@@ -43,19 +43,18 @@ class Vehicle(object):
 Position: {} \n \
 Queued Rides: {} \n".format(self.current_position, self.ride_queue)
 
-class Solution(object):
-    def __init__(self, tours):
-        self.tours = tours
 
-    def __repr__(self):
-        return "Tours: {}" % self.tours
-
-
-def load_solution(solution_path):
+def load_solution(solution_path, city):
     lines = get_lines_from_file(solution_path)
-    tours = [[int(tour_id) for tour_id in line.split()[1:]] for line in lines]
-    return Solution(tours)
+    tours = [[city.rides[int(tour_id)] for tour_id in line.split()[1:]] for line in lines]
 
+    if len(tours) != len(city.vehicles):
+        raise "Length of tours %s does not match number of vehicles %s." % (len(tours), len(city.vehicles))
+
+    for i, vehicle in enumerate(city.vehicles):
+        vehicle.ride_queue = deque(tours[i])
+
+    return city
 
 def save_solution(solution_path, city):
     output = [str(len(vehicle.ride_queue)) + " " + " ".join(map(lambda ride: str(ride.id), vehicle.ride_queue)) for vehicle in city.vehicles]

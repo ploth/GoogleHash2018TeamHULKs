@@ -2,7 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import argparse
-from parser import load_problem, load_solution, save_solution
+
+from parser import load_problem, load_solution
+from simulate import score_solution
 
 
 def main():
@@ -16,10 +18,10 @@ def main():
     solution_path = args.solution
 
     city = load_problem(problem_path)
-    city.vehicles[0].ride_queue.append(city.rides[0])
-    city.vehicles[1].ride_queue.append(city.rides[2])
-    city.vehicles[1].ride_queue.append(city.rides[1])
-    save_solution(solution_path+".me", city)
+    solution = load_solution(solution_path, city)
+
+    print(score_solution(solution))
+
 
 
 if __name__ == '__main__':
