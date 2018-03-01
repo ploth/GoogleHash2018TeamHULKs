@@ -16,7 +16,7 @@ Vehicles: {} \n \
 Number of rides: {} \n \
 Bonus: {} \n \
 Steps: {} \n \
-Rides: {}".format(self.size, self.vehicles, self.num_rides, self.bonus, self.steps, self.rides)
+Rides: {} \n".format(self.size, self.vehicles, self.num_rides, self.bonus, self.steps, self.rides)
 
 class Ride(object):
     def __init__(self, start_from, end_at, earliest_start, latest_finish):
@@ -30,7 +30,7 @@ class Ride(object):
 From: {} \n \
 To: {} \n \
 Earliest start: {} \n \
-Latest_finish: {}".format(self.start_from, self.end_at, self.earliest_start, self.latest_finish)
+Latest_finish: {} \n".format(self.start_from, self.end_at, self.earliest_start, self.latest_finish)
 
 class Vehicle(object):
     def __init__(self):
@@ -40,7 +40,7 @@ class Vehicle(object):
     def __repr__(self):
         return "Vehicle: \n \
 Position: {} \n \
-Queued Rides: {}".format(self.current_position, self.ride_queue)
+Queued Rides: {} \n".format(self.current_position, self.ride_queue)
 
 def get_lines_from_file(path):
     with open(path, 'r') as file:
