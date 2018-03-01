@@ -11,7 +11,7 @@ def naive_strategy(city):
 
 def naive_check_strategy(city):
     # loop through rides and give a ride to next vehicle in line
-    for ride in city.rides:
+    for ride in sorted(city.rides, key=lambda ride: ride.earliest_start):
         vehicle = city.vehicles.pop(0)
 
         vehicle_to_start = distance(vehicle.current_position, ride.start_from)
