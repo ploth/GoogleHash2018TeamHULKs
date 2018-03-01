@@ -16,8 +16,10 @@ def main():
     solution_path = args.solution
 
     city = load_problem(problem_path)
-    solution = load_solution(solution_path)
-    save_solution(solution_path+".me", solution)
+    city.vehicles[0].ride_queue.append(city.rides[0])
+    city.vehicles[1].ride_queue.append(city.rides[2])
+    city.vehicles[1].ride_queue.append(city.rides[1])
+    save_solution(solution_path+".me", city)
 
 
 if __name__ == '__main__':

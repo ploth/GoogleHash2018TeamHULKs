@@ -19,18 +19,19 @@ Steps: {} \n \
 Rides: {} \n".format(self.size, self.vehicles, self.num_rides, self.bonus, self.steps, self.rides)
 
 class Ride(object):
-    def __init__(self, start_from, end_at, earliest_start, latest_finish):
+    def __init__(self, id, start_from, end_at, earliest_start, latest_finish):
+        self.id = id
         self.start_from = start_from
         self.end_at = end_at
         self.earliest_start = earliest_start
         self.latest_finish = latest_finish
 
     def __repr__(self):
-        return "Ride: \n \
+        return "Ride {}: \n \
 From: {} \n \
 To: {} \n \
 Earliest start: {} \n \
-Latest_finish: {} \n".format(self.start_from, self.end_at, self.earliest_start, self.latest_finish)
+Latest_finish: {} \n".format(self.id, self.start_from, self.end_at, self.earliest_start, self.latest_finish)
 
 class Vehicle(object):
     def __init__(self):
@@ -56,8 +57,8 @@ def load_solution(solution_path):
     return Solution(tours)
 
 
-def save_solution(solution_path, solution):
-    output = [str(len(tour)) + " " + " ".join(map(str, tour)) for tour in solution.tours]
+def save_solution(solution_path, city):
+    output = [str(len(vehicle.ride_queue)) + " " + " ".join(map(lambda ride: str(ride.id), vehicle.ride_queue)) for vehicle in city.vehicles]
 
     with open(solution_path, 'w') as file:
         file.write("\n".join(output))
@@ -81,14 +82,14 @@ def interpret_lines(lines):
 
     # get rides from rest of lines
     rides = []
-    for line in lines[1:]:
+    for ride_id, line in enumerate(lines[1:]):
         print(line)
         line_numbers = [int(number_str) for number_str in line.split()]
         start_from = (line_numbers[0], line_numbers[1])
         end_at = (line_numbers[2], line_numbers[3])
         earliest_start = line_numbers[4]
         latest_finish = line_numbers[5]
-        rides.append(Ride(start_from, end_at, earliest_start, latest_finish))
+        rides.append(Ride(ride_id, start_from, end_at, earliest_start, latest_finish))
 
     return City(city_size, vehicles, num_rides, bonus, steps, rides)
 
