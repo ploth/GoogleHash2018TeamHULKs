@@ -15,11 +15,13 @@ def main():
     input_path = args.input_path
 
     lines = get_lines_from_file(input_path)
-    pizza = interpret_lines(lines)
+    city = interpret_lines(lines)
 
-    pizza.slices = [(0, 0, 2, 1), (0, 2, 3, 3), (3, 0, 4, 2)]
+    print(city)
 
-    write_solution_file(pizza)
+    #  pizza.slices = [(0, 0, 2, 1), (0, 2, 3, 3), (3, 0, 4, 2)]
+
+    #  write_solution_file(pizza)
 
 if __name__ == '__main__':
     main()

@@ -1,37 +1,62 @@
-class Pizza(object):
-    def __init__(self, size, min_ingredient, max_cells, toppings):
+class City(object):
+    def __init__(self, size, vehicles, num_rides, bonus, steps, rides):
         self.size = size
-        self.min_ingredient_per_slice = min_ingredient
-        self.max_cells_per_slice = max_cells
-        self.toppings = toppings
-        self.slices = []
+        self.vehicles = vehicles
+        self.num_rides = num_rides
+        self.bonus = bonus
+        self.steps = steps
+        self.rides = rides
 
     def __repr__(self):
-        return "Pizza: \n \
+        return "City: \n \
 Size: {} \n \
-Min_ingredients: {} \n \
-Max_cells_in_slice: {} \n \
-Toppings: {}".format(self.size, self.min_ingredient_per_slice, self.max_cells_per_slice, self.toppings)
+Vehicles: {} \n \
+Number of rides: {} \n \
+Bonus: {} \n \
+Steps: {} \n \
+Rides: {}".format(self.size, self.vehicles, self.num_rides, self.bonus, self.steps, self.rides)
+
+class Ride(object):
+    def __init__(self, start_from, end_at, earliest_start, latest_finish):
+        self.start_from = start_from
+        self.end_at = end_at
+        self.earliest_start = earliest_start
+        self.latest_finish = latest_finish
+
+    def __repr__(self):
+        return "Ride: \n \
+From: {} \n \
+To: {} \n \
+Earliest start: {} \n \
+Latest_finish: {}".format(self.start_from, self.end_at, self.earliest_start, self.latest_finish)
 
 
 def get_lines_from_file(path):
     with open(path, 'r') as file:
         content = file.read()
 
-    return [line for line in content.split("\n")]
+    return [line for line in content.split("\n") if len(line) > 0]
 
 def interpret_lines(lines):
     # get attributes from first line
+    print(lines)
     first_line_numbers = [int(number_str) for number_str in lines[0].split()]
-    pizza_size = (first_line_numbers[0], first_line_numbers[1])
-    min_ingredient_per_slice = first_line_numbers[2]
-    max_cells_per_slice = first_line_numbers[3]
+    city_size = (first_line_numbers[0], first_line_numbers[1])
+    vehicles = first_line_numbers[2]
+    num_rides = first_line_numbers[3]
+    bonus = first_line_numbers[4]
+    steps = first_line_numbers[5]
 
-    # get toppings from rest of lines
-    toppings = [[0 for i in range(pizza_size[1])] for j in range(pizza_size[0])]
-    for i, line in enumerate(lines[1:]):
-        for j, char in enumerate(line):
-            toppings[i][j] = char
+    # get rides from rest of lines
+    rides = []
+    for line in lines[1:]:
+        print(line)
+        line_numbers = [int(number_str) for number_str in line.split()]
+        start_from = (line_numbers[0], line_numbers[1])
+        end_at = (line_numbers[2], line_numbers[3])
+        earliest_start = line_numbers[4]
+        latest_finish = line_numbers[5]
+        rides.append(Ride(start_from, end_at, earliest_start, latest_finish))
 
-    return Pizza(pizza_size, min_ingredient_per_slice, max_cells_per_slice, toppings)
+    return City(city_size, vehicles, num_rides, bonus, steps, rides)
 
