@@ -36,6 +36,7 @@ Latest_finish: {} \n".format(self.id, self.start_from, self.end_at, self.earlies
 class Vehicle(object):
     def __init__(self):
         self.current_position = (0, 0)
+        self.current_time = 0
         self.ride_queue = deque()
 
     def __repr__(self):
