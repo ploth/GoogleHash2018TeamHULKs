@@ -1,3 +1,5 @@
+from collections import deque
+
 class City(object):
     def __init__(self, size, vehicles, num_rides, bonus, steps, rides):
         self.size = size
@@ -30,6 +32,15 @@ To: {} \n \
 Earliest start: {} \n \
 Latest_finish: {}".format(self.start_from, self.end_at, self.earliest_start, self.latest_finish)
 
+class Vehicle(object):
+    def __init__(self):
+        self.current_position = (0, 0)
+        self.ride_queue = deque()
+
+    def __repr__(self):
+        return "Vehicle: \n \
+Position: {} \n \
+Queued Rides: {}".format(self.current_position, self.ride_queue)
 
 def get_lines_from_file(path):
     with open(path, 'r') as file:
@@ -42,7 +53,7 @@ def interpret_lines(lines):
     print(lines)
     first_line_numbers = [int(number_str) for number_str in lines[0].split()]
     city_size = (first_line_numbers[0], first_line_numbers[1])
-    vehicles = first_line_numbers[2]
+    vehicles = [Vehicle() for i in range(first_line_numbers[2])]
     num_rides = first_line_numbers[3]
     bonus = first_line_numbers[4]
     steps = first_line_numbers[5]
