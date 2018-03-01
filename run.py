@@ -24,5 +24,6 @@ def main():
         print("Score: %s" % score_solution(solution))
         save_solution("./solutions/%s_%s.out" % (filename, strategy_name), solution)
 
+
 if __name__ == '__main__':
     main()

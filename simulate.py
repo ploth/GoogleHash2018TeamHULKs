@@ -5,26 +5,26 @@ def distance(a, b):
 def score_vehicle(city, vehicle):
     total_points = 0
     t = 0
+    vehicle.current_position = (0, 0)
 
     for ride in vehicle.ride_queue:
         # durations
-        duration_drive_to_start = distance(ride.start_from, vehicle.current_position)
-        duration_ride = distance(ride.start_from, ride.end_at)
-        is_punctual = t + duration_drive_to_start == ride.earliest_start
+        vehicle_to_start = distance(vehicle.current_position, ride.start_from)
+        ride_duration = distance(ride.start_from, ride.end_at)
+        total_duration = vehicle_to_start + ride_duration
+        is_punctual = t + vehicle_to_start == ride.earliest_start
 
         # update state
-        t = t + duration_ride + duration_drive_to_start
+        t = t + total_duration
         vehicle.current_position = ride.end_at
 
         if t > city.steps:
-            raise Exception("INVALID SOLUTION: Vehicle took to long.")
+            raise Exception("INVALID SOLUTION: Vehicle took to long with ride %s: %s, %s" % (ride.id, t, len(vehicle.ride_queue)))
 
         # calculate points per ride
-        ride_points = duration_ride
+        ride_points = ride_duration
         if is_punctual:
             ride_points = ride_points + city.bonus
-
-        print("Ride %s = %s pts." % (ride.id, ride_points))
 
         # add to points
         total_points = total_points + ride_points

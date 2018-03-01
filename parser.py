@@ -83,7 +83,6 @@ def interpret_lines(lines):
     # get rides from rest of lines
     rides = []
     for ride_id, line in enumerate(lines[1:]):
-        print(line)
         line_numbers = [int(number_str) for number_str in line.split()]
         start_from = (line_numbers[0], line_numbers[1])
         end_at = (line_numbers[2], line_numbers[3])
