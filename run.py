@@ -2,9 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import argparse
-import sys
-from parser import get_lines_from_file, interpret_lines
-from writer import write_solution_file
+
+from parser import load_problem
 
 def main():
     # read command line arguments
@@ -14,9 +13,7 @@ def main():
     args = arg_parser.parse_args()
     input_path = args.input_path
 
-    lines = get_lines_from_file(input_path)
-    city = interpret_lines(lines)
-
+    city = load_problem(input_path)
     print(city)
 
     #  pizza.slices = [(0, 0, 2, 1), (0, 2, 3, 3), (3, 0, 4, 2)]

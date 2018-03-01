@@ -42,15 +42,36 @@ class Vehicle(object):
 Position: {} \n \
 Queued Rides: {} \n".format(self.current_position, self.ride_queue)
 
+class Solution(object):
+    def __init__(self, tours):
+        self.tours = tours
+
+    def __repr__(self):
+        return "Tours: {}" % self.tours
+
+
+def load_solution(solution_path):
+    lines = get_lines_from_file(solution_path)
+    tours = [[int(tour_id) for tour_id in line.split()[1:]] for line in lines]
+    return Solution(tours)
+
+
+def save_solution(solution_path, solution):
+    output = [str(len(tour)) + " " + " ".join(map(str, tour)) for tour in solution.tours]
+
+    with open(solution_path, 'w') as file:
+        file.write("\n".join(output))
+
+
 def get_lines_from_file(path):
     with open(path, 'r') as file:
         content = file.read()
 
     return [line for line in content.split("\n") if len(line) > 0]
 
+
 def interpret_lines(lines):
     # get attributes from first line
-    print(lines)
     first_line_numbers = [int(number_str) for number_str in lines[0].split()]
     city_size = (first_line_numbers[0], first_line_numbers[1])
     vehicles = [Vehicle() for i in range(first_line_numbers[2])]
@@ -71,3 +92,8 @@ def interpret_lines(lines):
 
     return City(city_size, vehicles, num_rides, bonus, steps, rides)
 
+
+def load_problem(path):
+    lines = get_lines_from_file(path)
+    city = interpret_lines(lines)
+    return city
