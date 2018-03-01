@@ -4,6 +4,7 @@
 import argparse
 import sys
 from parser import get_lines_from_file, interpret_lines
+from simulate import score_solution
 from writer import write_solution_file
 from strategies import naive_strategy
 
@@ -21,6 +22,7 @@ def main():
     naive_city = naive_strategy(city)
 
     print(naive_city)
+    print(score_solution(naive_city))
 
 if __name__ == '__main__':
     main()
