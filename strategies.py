@@ -24,7 +24,9 @@ def naive_check_strategy(city):
                 vehicle.ride_queue.append(ride)
                 vehicle.current_position = ride.end_at
                 vehicle.current_time = vehicle.current_time + distance(ride.start_from, ride.end_at)
-                city.vehicles.append(vehicle)
+
+            city.vehicles.append(vehicle)
+
         else:
             vehicle.ride_queue.append(ride)
             vehicle.current_position = ride.end_at
