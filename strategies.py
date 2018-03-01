@@ -52,7 +52,7 @@ def get_start_time(ride, vehicle):
 
 
 def best_score(city):
-    for ride in sorted(city.rides, key=lambda ride: ride.earliest_start):
+    for ride in sorted(city.rides, key=lambda ride: (ride.earliest_start, ride.latest_finish)):
         max_vehicle_score = float("-inf")
         best_vehicle = None
         for vehicle in city.vehicles:
@@ -61,10 +61,10 @@ def best_score(city):
 
             vehicle_to_start, ride_duration, total_duration, start_time, time_finish = get_ride_times(ride, vehicle)
             start_time = get_start_time(ride, vehicle)
-            waiting_duration = start_time - vehicle.current_time
+            waiting_duration = start_time - vehicle.current_time - vehicle_to_start
 
             bonus = city.bonus if waiting_duration >= 0 else 0
-            vehicle_score = -vehicle_to_start - waiting_duration + ride_duration + bonus
+            vehicle_score = -vehicle_to_start - (waiting_duration if waiting_duration > 0 else 0)+ ride_duration + bonus
 
             if vehicle_score > max_vehicle_score:
                 max_vehicle_score = vehicle_score

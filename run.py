@@ -23,7 +23,7 @@ def main():
         solution = strategies.__dict__[strategy_name](city)
 
         score = score_solution(solution)
-        print("Score: %s" % score)
+        print("Score %s: %s" % (filename, score))
         save_solution("./solutions/%s_%s.out" % (filename, strategy_name), solution)
         total_score = total_score + score
 
